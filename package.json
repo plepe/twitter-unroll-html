@@ -1,0 +1,19 @@
+{
+  "name": "twitter-unroll",
+  "version": "0.0.0",
+  "description": "Unroll a twitter thread into a JSON file (and download images)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plepe/twitter-unroll.git"
+  },
+  "author": "Stephan Bösch-Plepelits <skunk@xover.mud.at>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/plepe/twitter-unroll/issues"
+  },
+  "homepage": "https://github.com/plepe/twitter-unroll#readme"
+}
