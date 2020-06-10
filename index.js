@@ -1,5 +1,7 @@
 const Twitter = require('twitter')
 const ArgumentParser = require('argparse').ArgumentParser
+const fs = require('fs')
+const async = require('async')
 
 const loadThread = require('./src/loadThread.js')
 const htmlifyThread = require('./src/htmlifyThread.js')
@@ -41,6 +43,19 @@ loadThread(args.id, (err, thread) => {
     html +
     '</body></html>'
 
-    console.log(html)
+    fs.mkdir(args.id, (err) => {
+      if (err) { return console.error(err.toString()) }
+
+      async.parallel([
+        (done) => fs.writeFile(args.id + '/index.html', html, done),
+        (done) => fs.writeFile(args.id + '/thread.json', JSON.stringify(thread, null, '  '), done),
+        (done) => fs.copyFile('style.css', args.id + '/style.css', done)
+      ],
+      (err) => {
+        if (err) {
+          console.error(err.toString())
+        }
+      })
+    })
   })
 })
