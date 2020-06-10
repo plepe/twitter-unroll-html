@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "standard --fix index.js"
+    "lint": "standard --fix index.js src/*.js"
   },
   "repository": {
     "type": "git",
