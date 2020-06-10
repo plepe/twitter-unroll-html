@@ -17,6 +17,9 @@
     "url": "https://github.com/plepe/twitter-unroll/issues"
   },
   "homepage": "https://github.com/plepe/twitter-unroll#readme",
+  "dependencies": {
+    "twitter": "^1.7.1"
+  },
   "devDependencies": {
     "standard": "^14.3.4"
   }
