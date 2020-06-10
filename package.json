@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "standard --fix index.js src/*.js"
+    "lint": "standard --fix cli.js src/*.js"
+  },
+  "bin": {
+    "twitter-unroll-html": "./cli.js"
   },
   "repository": {
     "type": "git",
