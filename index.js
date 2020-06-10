@@ -5,6 +5,7 @@ const async = require('async')
 
 const loadThread = require('./src/loadThread.js')
 const htmlifyThread = require('./src/htmlifyThread.js')
+const downloadMedia = require('./src/downloadMedia.js')
 
 parser = new ArgumentParser({
   addHelp: true
@@ -49,7 +50,8 @@ loadThread(args.id, (err, thread) => {
       async.parallel([
         (done) => fs.writeFile(args.id + '/index.html', html, done),
         (done) => fs.writeFile(args.id + '/thread.json', JSON.stringify(thread, null, '  '), done),
-        (done) => fs.copyFile('style.css', args.id + '/style.css', done)
+        (done) => fs.copyFile('style.css', args.id + '/style.css', done),
+        (done) => downloadMedia(thread, args.id, done),
       ],
       (err) => {
         if (err) {
