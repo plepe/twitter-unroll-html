@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/plepe/twitter-unroll#readme",
   "dependencies": {
+    "async": "^3.2.0",
     "twitter": "^1.7.1"
   },
   "devDependencies": {

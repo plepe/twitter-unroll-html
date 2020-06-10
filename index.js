@@ -1,5 +1,6 @@
 const Twitter = require('twitter')
 const loadThread = require('./src/loadThread.js')
+const htmlifyThread = require('./src/htmlifyThread.js')
 
 global.client = new Twitter({
   consumer_key: '',
@@ -8,10 +9,22 @@ global.client = new Twitter({
   access_token_secret: ''
 })
 
-loadThread('1234', (err, result) => {
+loadThread('1234', (err, thread) => {
   if (err) {
     return console.error(err)
   }
 
-  console.log(JSON.stringify(result, null, '  '))
+  htmlifyThread(thread, (err, html) => {
+    if (err) {
+      return console.error(err)
+    }
+
+    html = '<!DOCTYPE html>\n<html>\n<head>\n' +
+    '<meta charset="UTF-8">' +
+    '</head>\n<body>\n' +
+    html +
+    '</body></html>'
+
+    console.log(html)
+  })
 })
