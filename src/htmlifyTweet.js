@@ -7,7 +7,7 @@ module.exports = function htmlifyTweet (tweet, callback) {
     result += '\n  <ul class="media">\n'
 
     result += tweet.extended_entities.media.map(media => {
-      return '    <li><img src="' + htmlEscape(media.media_url_https) + '"></li>\n'
+      return '    <li><a href="' + htmlEscape(media.media_url_https) + '"><img src="' + htmlEscape(media.media_url_https) + '"></a></li>\n'
     }).join('')
 
     result += '  </ul>\n'

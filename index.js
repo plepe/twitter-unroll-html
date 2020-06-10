@@ -21,6 +21,7 @@ loadThread('1234', (err, thread) => {
 
     html = '<!DOCTYPE html>\n<html>\n<head>\n' +
     '<meta charset="UTF-8">' +
+    '<link rel="stylesheet" href="style.css">' +
     '</head>\n<body>\n' +
     html +
     '</body></html>'
