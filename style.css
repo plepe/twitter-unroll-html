@@ -15,10 +15,11 @@ ul.media > li > a {
   height: 15em;
   display: table-cell;
   vertical-align: middle;
-  text-align: center;
+  position: relative;
 }
 ul.media > li > a > img {
   max-width: 100%;
   max-height: 100%;
   display: block;
+  margin: auto;
 }
