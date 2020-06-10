@@ -18,11 +18,25 @@ parser.addArgument(
   }
 )
 
+parser.addArgument(
+  [ '--api_key' ],
+  {
+    help: 'The API key for the registered App on developer.twitter.com'
+  }
+)
+
+parser.addArgument(
+  [ '--api_secret' ],
+  {
+    help: 'The API secret key for the registered App on developer.twitter.com'
+  }
+)
+
 const args = parser.parseArgs()
 
 global.client = new Twitter({
-  consumer_key: '',
-  consumer_secret: '',
+  consumer_key: args.api_key,
+  consumer_secret: args.api_secret,
   access_token_key: '',
   access_token_secret: ''
 })
