@@ -24,6 +24,7 @@
     "argparse": "^1.0.10",
     "async": "^3.2.0",
     "html-escape": "^2.0.0",
+    "moment": "^2.29.4",
     "twitter": "^1.7.1"
   },
   "devDependencies": {

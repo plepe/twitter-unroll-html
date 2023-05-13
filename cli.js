@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const Twitter = require('twitter')
 const ArgumentParser = require('argparse').ArgumentParser
+const moment = require('moment')
 const fs = require('fs')
 const async = require('async')
 
@@ -33,8 +34,29 @@ parser.addArgument(
   }
 )
 
+parser.addArgument(
+  [ '--locale' ],
+  {
+    help: 'Locale for formatting output (especially time formatting via moment.js).'
+  }
+)
+
+parser.addArgument(
+  [ '--time_format' ],
+  {
+    help: 'Format for formatting the tweet date. Uses moment.js',
+    default: 'llll'
+  }
+)
+
 const args = parser.parseArgs()
-const htmlifyOptions = {}
+const htmlifyOptions = {
+  timeFormat: args.time_format
+}
+
+if (args.locale) {
+  moment.locale(args.locale)
+}
 
 const twitterClient = new Twitter({
   consumer_key: args.api_key,

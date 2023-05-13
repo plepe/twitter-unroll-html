@@ -1,11 +1,12 @@
 const htmlEscape = require('html-escape')
+const moment = require('moment')
 
 module.exports = function htmlifyTweet (tweet, options, callback) {
   let result = ''
 
   result += '<div class="header">'
   result += '<span class="author">' + tweet.user.id + '</span> '
-  result += '<span class="date">' + new Date(tweet.created_at).toISOString() + '</span>'
+  result += '<span class="date">' + moment(new Date(tweet.created_at)).format(options.timeFormat || 'llll') + '</span>'
   result += '</div>'
 
   const fullText = tweet.full_text.split(' ').slice(0, -1).join(' ')
