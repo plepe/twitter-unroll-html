@@ -1,11 +1,17 @@
 const htmlEscape = require('html-escape')
 const moment = require('moment')
 
+const getUserInfo = require('./getUserInfo.js')
+
 module.exports = function htmlifyTweet (twitterClient, tweet, options, callback) {
+  getUserInfo(twitterClient, tweet.user.id_str, (err, user) => formatTweet(tweet, user, options, callback))
+}
+
+function formatTweet (tweet, user, options, callback) {
   let result = ''
 
   result += '<div class="header">'
-  result += '<span class="author">' + tweet.user.id + '</span> '
+  result += '<span class="author"><a href="https://twitter.com/' + user.screen_name + '">' + htmlEscape(user.name) + '</a></span> '
   result += '<span class="date">' + moment(new Date(tweet.created_at)).format(options.timeFormat || 'llll') + '</span>'
   result += '</div>'
 
