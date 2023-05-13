@@ -34,6 +34,7 @@ parser.addArgument(
 )
 
 const args = parser.parseArgs()
+const htmlifyOptions = {}
 
 const twitterClient = new Twitter({
   consumer_key: args.api_key,
@@ -47,7 +48,7 @@ loadThread(twitterClient, args.id, (err, thread) => {
     return console.error(err)
   }
 
-  htmlifyThread(thread, (err, html) => {
+  htmlifyThread(thread, htmlifyOptions, (err, html) => {
     if (err) {
       return console.error(err)
     }

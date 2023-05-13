@@ -2,11 +2,11 @@ const async = require('async')
 
 const htmlifyTweet = require('./htmlifyTweet.js')
 
-module.exports = function htmlifyThread (thread, callback) {
+module.exports = function htmlifyThread (thread, options, callback) {
   async.map(
     thread,
     (tweet, done) => {
-      htmlifyTweet(tweet, (err, result) => {
+      htmlifyTweet(tweet, options, (err, result) => {
         done(err, '<li>' + result + '</li>\n')
       })
     },
