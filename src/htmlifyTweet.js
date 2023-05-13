@@ -10,12 +10,14 @@ module.exports = function htmlifyTweet (twitterClient, tweet, options, callback)
 function formatTweet (tweet, user, options, callback) {
   let result = ''
 
+  const fullText = tweet.full_text.split(' ').slice(0, -1).join(' ')
+  const url = tweet.full_text.split(' ').pop()
+
   result += '<div class="header">'
   result += '<span class="author"><a href="https://twitter.com/' + user.screen_name + '">' + htmlEscape(user.name) + '</a></span> '
-  result += '<span class="date">' + moment(new Date(tweet.created_at)).format(options.timeFormat || 'llll') + '</span>'
+  result += '<span class="date"><a href="' + url + '">' + moment(new Date(tweet.created_at)).format(options.timeFormat || 'llll') + '</a></span>'
   result += '</div>'
 
-  const fullText = tweet.full_text.split(' ').slice(0, -1).join(' ')
   result += '<div class="full_text">' + htmlEscape(fullText).replace(/\n/g, '<br>')
 
   if (tweet.extended_entities && tweet.extended_entities.media) {
