@@ -1,11 +1,11 @@
 const loadTweet = require('./loadTweet.js')
 
-module.exports = function loadThread (lastId, callback) {
-  loadTweet(lastId, (err, tweet) => {
+module.exports = function loadThread (twitterClient, lastId, callback) {
+  loadTweet(twitterClient, lastId, (err, tweet) => {
     if (err) { return callback(err) }
 
     if (tweet.in_reply_to_status_id_str) {
-      loadThread(tweet.in_reply_to_status_id_str, (err, thread) => {
+      loadThread(twitterClient, tweet.in_reply_to_status_id_str, (err, thread) => {
         if (err) { return callback(err) }
 
         thread.push(tweet)

@@ -35,14 +35,14 @@ parser.addArgument(
 
 const args = parser.parseArgs()
 
-global.client = new Twitter({
+const twitterClient = new Twitter({
   consumer_key: args.api_key,
   consumer_secret: args.api_secret,
   access_token_key: '',
   access_token_secret: ''
 })
 
-loadThread(args.id, (err, thread) => {
+loadThread(twitterClient, args.id, (err, thread) => {
   if (err) {
     return console.error(err)
   }
