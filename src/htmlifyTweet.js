@@ -1,8 +1,15 @@
 const htmlEscape = require('html-escape')
 
 module.exports = function htmlifyTweet (tweet, options, callback) {
+  let result = ''
+
+  result += '<div class="header">'
+  result += '<span class="author">' + tweet.user.id + '</span> '
+  result += '<span class="date">' + new Date(tweet.created_at).toISOString() + '</span>'
+  result += '</div>'
+
   const fullText = tweet.full_text.split(' ').slice(0, -1).join(' ')
-  let result = '<div class="full_text">' + htmlEscape(fullText).replace(/\n/g, '<br>')
+  result += '<div class="full_text">' + htmlEscape(fullText).replace(/\n/g, '<br>')
 
   if (tweet.extended_entities && tweet.extended_entities.media) {
     result += '\n  <ul class="media">\n'
