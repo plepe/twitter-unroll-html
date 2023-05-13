@@ -70,7 +70,7 @@ loadThread(twitterClient, args.id, (err, thread) => {
     return console.error(err)
   }
 
-  htmlifyThread(thread, htmlifyOptions, (err, html) => {
+  htmlifyThread(twitterClient, thread, htmlifyOptions, (err, html) => {
     if (err) {
       return console.error(err)
     }

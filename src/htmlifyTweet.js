@@ -1,7 +1,7 @@
 const htmlEscape = require('html-escape')
 const moment = require('moment')
 
-module.exports = function htmlifyTweet (tweet, options, callback) {
+module.exports = function htmlifyTweet (twitterClient, tweet, options, callback) {
   let result = ''
 
   result += '<div class="header">'

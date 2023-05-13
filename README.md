@@ -36,7 +36,7 @@ const htmlifyOptions = {
 twitterUnrollHtml.loadThread(twitterClient, 12345, (err, thread) => {
   // this will build a simple HTML list with all tweets including <img> tags
   // for all media files.
-  twitterUnrollHtml.htmlifyThread(thread, htmlifyOptions, (err, body) => {
+  twitterUnrollHtml.htmlifyThread(twitterClient, thread, htmlifyOptions, (err, body) => {
     console.log(body)
   })
 
