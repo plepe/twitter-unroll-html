@@ -42,9 +42,9 @@ parser.addArgument(
 )
 
 parser.addArgument(
-  [ '--time_format' ],
+  [ '--time-format' ],
   {
-    help: 'Format for formatting the tweet date. Uses moment.js',
+    help: 'Format for formatting the tweet date, using moment.js.',
     default: 'llll'
   }
 )
