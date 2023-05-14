@@ -20,7 +20,7 @@ function formatTweet (tweet, user, options, callback) {
 
   result += '<div class="full_text">' + htmlEscape(fullText).replace(/\n/g, '<br>')
 
-  if (tweet.extended_entities && tweet.extended_entities.media) {
+  if (!options.htmlHideImages && tweet.extended_entities && tweet.extended_entities.media) {
     result += '\n  <ul class="media">\n'
 
     result += tweet.extended_entities.media.map(media => {

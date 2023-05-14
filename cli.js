@@ -49,9 +49,18 @@ parser.addArgument(
   }
 )
 
+parser.addArgument(
+  [ '--html-hide-images' ],
+  {
+    action: 'storeTrue',
+    help: 'Just download media, but do not include in HTML output.'
+  }
+)
+
 const args = parser.parseArgs()
 const htmlifyOptions = {
-  timeFormat: args.time_format
+  timeFormat: args.time_format,
+  htmlHideImages: args.html_hide_images
 }
 
 if (args.locale) {
