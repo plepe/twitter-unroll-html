@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const Twitter = require('twitter')
 const ArgumentParser = require('argparse').ArgumentParser
+const moment = require('moment')
 const fs = require('fs')
 const async = require('async')
 
@@ -33,21 +34,52 @@ parser.addArgument(
   }
 )
 
-const args = parser.parseArgs()
+parser.addArgument(
+  [ '--locale' ],
+  {
+    help: 'Locale for formatting output (especially time formatting via moment.js).'
+  }
+)
 
-global.client = new Twitter({
+parser.addArgument(
+  [ '--time-format' ],
+  {
+    help: 'Format for formatting the tweet date, using moment.js.',
+    default: 'llll'
+  }
+)
+
+parser.addArgument(
+  [ '--html-hide-images' ],
+  {
+    action: 'storeTrue',
+    help: 'Just download media, but do not include in HTML output.'
+  }
+)
+
+const args = parser.parseArgs()
+const htmlifyOptions = {
+  timeFormat: args.time_format,
+  htmlHideImages: args.html_hide_images
+}
+
+if (args.locale) {
+  moment.locale(args.locale)
+}
+
+const twitterClient = new Twitter({
   consumer_key: args.api_key,
   consumer_secret: args.api_secret,
   access_token_key: '',
   access_token_secret: ''
 })
 
-loadThread(args.id, (err, thread) => {
+loadThread(twitterClient, args.id, (err, thread) => {
   if (err) {
     return console.error(err)
   }
 
-  htmlifyThread(thread, (err, html) => {
+  htmlifyThread(twitterClient, thread, htmlifyOptions, (err, html) => {
     if (err) {
       return console.error(err)
     }
