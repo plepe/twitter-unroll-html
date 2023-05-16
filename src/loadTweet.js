@@ -20,7 +20,6 @@ function run (twitterClient) {
 
   var params = { id: Object.keys(_ids).join(','), trim_user: true, tweet_mode: 'extended' }
   twitterClient.get('statuses/lookup', params, (err, tweets) => {
-    console.log(tweets)
     if (err) {
       return _cbs.forEach(cb => cb.callback(err))
     }
