@@ -26,7 +26,7 @@ function formatTweet (tweet, user, options, callback) {
   tweet.text = tweet.full_text.split(' ').slice(0, -1).join(' ')
   tweet.url = tweet.full_text.split(' ').pop()
 
-  const template = Twig.twig({ data: defaultFormat })
+  const template = Twig.twig({ data: options.tweetFormat ?? defaultFormat })
 
   const result = template.render({ user, tweet, options })
 

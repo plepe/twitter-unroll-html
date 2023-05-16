@@ -57,10 +57,18 @@ parser.addArgument(
   }
 )
 
+parser.addArgument(
+  [ '--tweet-format' ],
+  {
+    help: 'Alternative format for formatting tweets. Check src/htmlifyTweet.js for the default format.'
+  }
+)
+
 const args = parser.parseArgs()
 const htmlifyOptions = {
   timeFormat: args.time_format,
-  htmlHideImages: args.html_hide_images
+  htmlHideImages: args.html_hide_images,
+  tweetFormat: args.tweet_format
 }
 
 if (args.locale) {
