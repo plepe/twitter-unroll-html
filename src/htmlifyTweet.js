@@ -1,42 +1,34 @@
-const htmlEscape = require('html-escape')
-const moment = require('moment')
-
 const getUserInfo = require('./getUserInfo.js')
+const Twig = require('./twig')
+
+const defaultFormat = `
+<div class="header">
+<span class="author"><a href="https://twitter.com/{{ user.screen_name }}">{{ user.name }}</a><span>
+<span class="date"><a href="{{ tweet.url }}">{{ tweet.created_at|moment(options.timeFormat|default('llll')) }}</a></span>
+</div>
+<div class="full_text">{{ tweet.text|nl2br }}
+{% if not options.htmlHideImages and tweet.extended_entities and tweet.extended_entities.media %}
+<ul class="media">
+{% for media in tweet.extended_entities.media %}
+{% set filename = media.media_url_https|split('/')|last %}
+<li><a href="{{ filename }}"><img src="{{ filename }}"></a></li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+`
 
 module.exports = function htmlifyTweet (twitterClient, tweet, options, callback) {
   getUserInfo(twitterClient, tweet.user.id_str, (err, user) => formatTweet(tweet, user, options, callback))
 }
 
 function formatTweet (tweet, user, options, callback) {
-  let result = ''
+  tweet.text = tweet.full_text.split(' ').slice(0, -1).join(' ')
+  tweet.url = tweet.full_text.split(' ').pop()
 
-  const fullText = tweet.full_text.split(' ').slice(0, -1).join(' ')
-  const url = tweet.full_text.split(' ').pop()
+  const template = Twig.twig({ data: defaultFormat })
 
-  result += '<div class="header">'
-  result += '<span class="author"><a href="https://twitter.com/' + user.screen_name + '">' + htmlEscape(user.name) + '</a></span> '
-  result += '<span class="date"><a href="' + url + '">' + moment(new Date(tweet.created_at)).format(options.timeFormat || 'llll') + '</a></span>'
-  result += '</div>'
-
-  result += '<div class="full_text">' + htmlEscape(fullText).replace(/\n/g, '<br>')
-
-  if (!options.htmlHideImages && tweet.extended_entities && tweet.extended_entities.media) {
-    result += '\n  <ul class="media">\n'
-
-    result += tweet.extended_entities.media.map(media => {
-      const filename = media.media_url_https.match(/\/([A-Za-z0-9\-_]+\.[A-Za-z0-9]+)$/)
-      if (!filename) {
-        return console.error("Can't parse filename from \"" + media.media_url_https + "\"")
-      }
-
-
-      return '    <li><a href="' + htmlEscape(filename[1]) + '"><img src="' + htmlEscape(media.media_url_https) + '"></a></li>\n'
-    }).join('')
-
-    result += '  </ul>\n'
-  }
-
-  result += '</div>'
+  const result = template.render({ user, tweet, options })
 
   callback(null, result)
 }
